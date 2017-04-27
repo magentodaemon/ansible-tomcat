@@ -1,0 +1,40 @@
+- name: Get tomcat package
+  get_url:
+    url: http://mirror.fibergrid.in/apache/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.5.14.tar.gz
+    dest: ~/apache-tomcat.tar.gz
+  become: true
+  become_user: tomcat
+
+
+- name: Uncompress tomcat package
+  unarchive:
+    src: ~/apache-tomcat.tar.gz
+    dest: ~/
+    remote_src: True
+  become: true
+  become_user: tomcat  
+
+- name: Configure CATALINA_HOME path variables for tomcat
+  lineinfile: 
+    dest: ~/.bashrc
+    regexp: '^CATALINA_HOME='
+    line: "export CATALINA_HOME=/home/tomcat/apache-tomcat-8.5.14"
+  become: true
+  become_user: tomcat
+
+
+- name: Configure CATALINA_BASE path variables for tomcat
+  lineinfile:
+    dest: ~/.bashrc
+    regexp: '^CATALINA_BASE='
+    line: "export CATALINA_BASE=$CATALINA_HOME"
+  become: true
+  become_user: tomcat
+
+
+- name: Reload source
+  shell: source ~/.bashrc
+  become: true
+  become_user: tomcat
+
+

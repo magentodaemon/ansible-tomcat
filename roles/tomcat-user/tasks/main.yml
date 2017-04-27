@@ -1,0 +1,13 @@
+- name: Create a tomcat group 
+  group:
+    name: tomcat
+    state: present
+
+
+- name: Create a tomcat user
+  user:
+    name: tomcat
+    comment: "Tomcat Tomcat"
+    group: tomcat
+    shell: /bin/bash
+    state: present

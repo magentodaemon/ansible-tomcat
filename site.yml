@@ -1,0 +1,9 @@
+---
+#create tomcat-user and install tomcat
+- hosts: tomcatserver
+  remote_user: root
+
+  roles: 
+    - tomcat-user
+    - install-tomcat
+...
